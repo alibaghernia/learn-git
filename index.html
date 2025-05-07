@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>🎯 بازی حدس عدد</title>
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      direction: rtl;
+      background: #f0f4f8;
+      text-align: center;
+      padding: 50px;
+      color: #333;
+    }
+    h1 {
+      color: #0077cc;
+      font-size: 2.5em;
+    }
+    p.description {
+      font-size: 1.1em;
+      margin-bottom: 30px;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 1em;
+      width: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      margin-right: 10px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #005fa3;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎯 بازی حدس عدد</h1>
+  <p class="description">یک عدد بین ۱ تا ۱۰۰ در ذهن من هست. سعی کن حدس بزنی چنده! بعد از هر حدس بهت می‌گم عدد بزرگ‌تره یا کوچک‌تر.</p>
+
+  <input type="number" id="guessInput" min="1" max="100" />
+  <button onclick="checkGuess()">حدس بزن</button>
+  <button onclick="resetGame()">شروع دوباره</button>
+
+  <p id="result"></p>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    console.log('secret number is: '+secretNumber);
+    let attempts = 0;
+
+    function checkGuess() {
+      const guess = parseInt(document.getElementById("guessInput").value);
+      const result = document.getElementById("result");
+      attempts++;
+
+      if (isNaN(guess) || guess < 1 || guess > 100) {
+        result.textContent = "لطفاً عددی بین ۱ تا ۱۰۰ وارد کن.";
+        return;
+      }
+
+      if (guess === secretNumber) {
+        result.textContent = `آفرین! عدد درست ${secretNumber} بود. شما در ${attempts} تلاش موفق شدی 🎉`;
+      } else if (guess < secretNumber) {
+        result.textContent = "عدد بزرگ‌تره ⬆️";
+      } else {
+        result.textContent = "عدد کوچک‌تره ⬇️";
+      }
+    }
+
+    function resetGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      console.log('new number is: '+secretNumber);
+      attempts = 0;
+      document.getElementById("result").textContent = "";
+      document.getElementById("guessInput").value = "";
+    }
+  </script>
+
+</body>
+</html>
